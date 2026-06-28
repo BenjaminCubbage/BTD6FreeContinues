@@ -1,0 +1,19 @@
+{
+    "version": 10,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 23,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "default",
+            "displayName": "defaultConfig",
+            "description": "Default build using Visual Studio 2022",
+            "generator": "Visual Studio 17 2022",
+            "cacheVariables": {
+                "BLOONSTD6_ROOT": "$env{ProgramFiles(x86)}\\Steam\\steamapps\\common\\BloonsTD6"
+            }
+        }
+    ]
+}
