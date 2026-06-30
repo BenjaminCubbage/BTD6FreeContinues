@@ -1,9 +1,15 @@
 #include <iostream>
 
-__declspec(dllexport)
-bool DllMain(HINSTANCE, DWORD fdwReason, LPVOID) {
-    if (fdwReason != DLL_PROCESS_ATTACH)
-        return true;
+extern "C" {
 
+__declspec(dllexport)
+bool DllMain(HINSTANCE, DWORD, LPVOID) {
     return true;
 }
+
+__declspec(dllexport)
+int Run(void*) {
+    return 0;
+}
+
+} // extern "C"
