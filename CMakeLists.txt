@@ -1,8 +1,14 @@
 cmake_minimum_required(VERSION 3.23)
+include(FetchContent)
 
 project(BTD6Patcher LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+FetchContent_Declare(minhook
+    GIT_REPOSITORY https://github.com/TsudaKageyu/minhook.git
+    GIT_TAG v1.3.4)
+FetchContent_MakeAvailable(minhook)
 
 if(NOT WIN32)
     message(FATAL_ERROR "This is a Windows application. System name: \"${CMAKE_SYSTEM_NAME}\"")
@@ -12,13 +18,12 @@ if(NOT BLOONSTD6_ROOT)
     message(FATAL_ERROR "Game root was not specified, did you forget --preset default?")
 endif()
 
-# Holy backslash batman
 string(ASCII 27 Esc)
 message("Using game directory: ${Esc}[44m${BLOONSTD6_ROOT}${Esc}[0m.")
 message("This can be changed in CMakePresets.json")
 
 add_library(payload SHARED src/payload.cpp)
-target_link_libraries(payload PUBLIC kernel32)
+target_link_libraries(payload PUBLIC kernel32 minhook)
 target_precompile_headers(payload PUBLIC <windows.h>)
 
 add_executable(bootstrapper ./src/bootstrapper.cpp)

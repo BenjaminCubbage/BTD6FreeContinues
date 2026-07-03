@@ -390,7 +390,13 @@ int main() {
     spawnedThreads.clear();
 
     /* Detach */
+
     DebugActiveProcessStop(pi.dwProcessId);
     CloseHandle(pi.hThread);
     CloseHandle(pi.hProcess);
+
+    std::cout
+        << "Press any key to close this terminal."
+        << std::endl;
+    std::cin.get();
 }
