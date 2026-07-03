@@ -38,11 +38,11 @@ char* (*il2cpp_class_get_assemblyname)(void* klass);
 bool (*il2cpp_class_is_valuetype)(void* klass);
 
 /* Methods */
-void* (*il2cpp_class_get_method_from_name)(void* klass, const char* name, int argsCount);
+void* (*il2cpp_class_get_method_from_name)(void* klass, const char* name, uint32_t argsCount);
 void* (*il2cpp_class_get_methods)(void* klass, void** iter);
 char* (*il2cpp_method_get_name)(void* method);
 int32_t(*il2cpp_method_get_param_count)(void* method);
-void* (*il2cpp_method_get_param)(void* method, int index);
+void* (*il2cpp_method_get_param)(void* method, int32_t index);
 void* (*il2cpp_method_get_return_type)(void* method);
 uint32_t(*il2cpp_method_get_flags)(void* method, uint32_t* iflags);
 
@@ -109,7 +109,7 @@ static void* getIl2CppClassMethod(
 
             bool isMatch{ true };
             for (size_t i{}; i < argumentTypeNames.size(); ++i) {
-                void* type = il2cpp_method_get_param(method, i);
+                void* type = il2cpp_method_get_param(method, (int32_t)i);
                 char* typeName = il2cpp_type_get_name(type);
 
                 if (typeName != argumentTypeNames[i]) {
@@ -155,13 +155,11 @@ static bool setContinueCount(void* inGameObj, int value) {
         "set_ContinuesUsed",
         { "System.Int32" });
 
-    if (method == nullptr)
-        return false;
-
     void* exc = nullptr;
     void* arg = &value;
     il2cpp_runtime_invoke(method, inGameObj, &arg, &exc);
-    return exc != nullptr;
+
+    return exc == nullptr;
 }
 
 /*
@@ -185,9 +183,9 @@ int Run(void*) {
     const FARPROC initProc = GetProcAddress(hModule, "il2cpp_init");
 
     if (MH_CreateHook(
-        initProc,
-        Patched_il2cpp_init,
-        (void**)&Original_il2cpp_init) != MH_STATUS::MH_OK ||
+            initProc,
+            Patched_il2cpp_init,
+            (void**)&Original_il2cpp_init) != MH_STATUS::MH_OK ||
         MH_EnableHook(MH_ALL_HOOKS) != MH_STATUS::MH_OK) {
         return 2;
     }
