@@ -6,6 +6,10 @@
 #include <vector>
 #include "MinHook.h"
 
+#ifndef PAYLOAD_FAIL_LOUDLY
+#error "PAYLOAD_FAIL_LOUDLY was not defined!"
+#endif
+
 /*
     Forward declarations
 */
@@ -253,13 +257,14 @@ static bool Patched_il2cpp_init(const char* domain_name) {
 }
 
 static void* Patched_GetContinueCost(void* __this, void* methodInfo) {
-    void* oldCost = Original_GetContinueCost(__this, methodInfo);
+    void* fallback =
+        PAYLOAD_FAIL_LOUDLY
+            ? nullptr
+            : Original_GetContinueCost(__this, methodInfo);
+            
     void* newCost = createKonFuzeInteger(0);
 
-    if (newCost == nullptr)
-        return nullptr;
-
-    return setContinueCount(__this, -1)
+    return newCost != nullptr && setContinueCount(__this, -1)
         ? newCost
-        : oldCost;
+        : fallback;
 }

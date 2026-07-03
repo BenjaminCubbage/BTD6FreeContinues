@@ -5,7 +5,9 @@
 
 This is an ad-hoc mod for BloonsTD6 which reduces the cost of game continues to zero. There is no visual change on the game over screen, but monkey money is not deducted.
 
-This mod is a CMake project. The only dependency the mod has is on MinHook and BTD6 itself. This software may break on future updates to BTD6. In this event, the payload may fail silently, or the game may crash when trying to continue.
+This mod is a CMake project. The only dependency the mod has is on MinHook and BTD6 itself. This software may break on future updates to BTD6. In this event, the payload may fail silently, or the game may crash when trying to continue. 
+
+To crash on failure instead of deducting the monkey money, set the PAYLOAD_FAIL_LOUDLY preset to true in CmakePresets.json.
 
 #### Code Rundown
 

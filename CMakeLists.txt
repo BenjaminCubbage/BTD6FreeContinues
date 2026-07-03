@@ -25,6 +25,8 @@ message("This can be changed in CMakePresets.json")
 add_library(payload SHARED src/payload.cpp)
 target_link_libraries(payload PUBLIC kernel32 minhook)
 target_precompile_headers(payload PUBLIC <windows.h>)
+target_compile_definitions(payload PRIVATE
+    PAYLOAD_FAIL_LOUDLY=${PAYLOAD_FAIL_LOUDLY})
 
 add_executable(bootstrapper ./src/bootstrapper.cpp)
 target_link_libraries(bootstrapper PRIVATE payload kernel32)
