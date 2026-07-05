@@ -3,11 +3,29 @@
 > [!NOTE]
 > This does not rely on any external software (except MinHook and the game itself), nor is it compatible with any external mods. *This project does not use a mod loader!*
 
-This is an ad-hoc mod for BloonsTD6 which reduces the cost of game continues to zero. There is no visual change on the game over screen, but monkey money is not deducted.
+This is an ad-hoc personal-use mod for BTD6 which makes continues free.
 
-This mod is a CMake project. The only dependency the mod has is on MinHook and BTD6 itself. This software may break on future updates to BTD6. In this event, the payload may fail silently, or the game may crash when trying to continue. 
+This mod is a CMake project. The only dependency the mod has is on MinHook and BTD6 itself. This software may break on future updates to BTD6.
 
-To crash on failure instead of deducting the monkey money, set the PAYLOAD_FAIL_LOUDLY preset to true in CmakePresets.json.
+#### Usage
+
+To configure:
+
+```sh
+cmake -B build -S . --preset default
+```
+
+To build:
+
+```sh
+cmake --build build --config Release
+```
+
+To run:
+
+```sh
+build\Release\bootstrapper
+```
 
 #### Code Rundown
 

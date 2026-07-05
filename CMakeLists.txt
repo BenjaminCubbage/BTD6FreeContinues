@@ -22,7 +22,11 @@ string(ASCII 27 Esc)
 message("Using game directory: ${Esc}[44m${BLOONSTD6_ROOT}${Esc}[0m.")
 message("This can be changed in CMakePresets.json")
 
-add_library(payload SHARED src/payload.cpp)
+add_library(payload SHARED 
+    src/payload.cpp 
+    src/payload_il2cpp_dbg.h
+    src/payload_il2cpp_procs.h
+    src/payload_il2cpp_utils.h)
 target_link_libraries(payload PUBLIC kernel32 minhook)
 target_precompile_headers(payload PUBLIC <windows.h>)
 target_compile_definitions(payload PRIVATE
